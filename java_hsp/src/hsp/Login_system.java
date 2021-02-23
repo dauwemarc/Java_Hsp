@@ -1,26 +1,37 @@
 package hsp;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import org.eclipse.swt.widgets.Shell;
 
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
+import bdd_co.connect;
 public class Login_system {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	protected Shell shell;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		connect fc=new connect();
+		System.out.println(fc.db());
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -77,6 +88,18 @@ public class Login_system {
 		frame.getContentPane().add(passwordField);
 		
 		JButton btnNewButton = new JButton("Login");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton.addActionListener((ActionListener) new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+					Controller_connexion Login_system = new Controller_connexion();
+					boolean message = Login_system.Login_system(textField.getText(), passwordField.getText(), shell);
+			}
+		});
+			}
+			}); 	
+		
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnNewButton.setBounds(402, 357, 134, 57);
 		frame.getContentPane().add(btnNewButton);
